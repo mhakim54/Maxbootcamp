@@ -1,0 +1,254 @@
+*,
+*::before,
+*::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --color-bg: #0e0e0e;
+    --color-surface: #1a1a1a;
+    --color-surface-hover: #252525;
+    --color-accent: #e63946;
+    --color-accent-dim: #a32833;
+    --color-text: #f1f1f1;
+    --color-text-muted: #888;
+    --color-border: #333;
+    --font-heading: 'Oswald', sans-serif;
+    --font-body: 'Open Sans', sans-serif;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: var(--font-body);
+    background-color: var(--color-bg);
+    color: var(--color-text);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Header */
+header {
+    background: linear-gradient(135deg, #1a1a1a 0%, #2a0a0a 100%);
+    border-bottom: 3px solid var(--color-accent);
+    padding: 2.5rem 1rem;
+    text-align: center;
+}
+
+.header-content h1 {
+    font-family: var(--font-heading);
+    font-size: 3rem;
+    text-transform: uppercase;
+    letter-spacing: 4px;
+    color: var(--color-text);
+}
+
+.tagline {
+    font-size: 1.1rem;
+    color: var(--color-text-muted);
+    margin-top: 0.5rem;
+    font-style: italic;
+}
+
+/* Main content */
+main {
+    flex: 1;
+    max-width: 720px;
+    width: 100%;
+    margin: 0 auto;
+    padding: 2rem 1rem;
+}
+
+/* Controls */
+.controls {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    margin-bottom: 2rem;
+}
+
+.btn {
+    font-family: var(--font-heading);
+    font-size: 1rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    padding: 0.75rem 1.5rem;
+    border: 2px solid transparent;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.btn:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+}
+
+.btn-primary {
+    background: var(--color-accent);
+    color: #fff;
+    border-color: var(--color-accent);
+}
+
+.btn-primary:hover:not(:disabled) {
+    background: var(--color-accent-dim);
+}
+
+.btn-secondary {
+    background: transparent;
+    color: var(--color-text);
+    border-color: var(--color-border);
+}
+
+.btn-secondary:hover:not(:disabled) {
+    border-color: var(--color-text-muted);
+}
+
+.btn-icon {
+    font-size: 0.85rem;
+}
+
+/* Tweet cards */
+.tweet-card {
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: 8px;
+    padding: 1.25rem 1.5rem;
+    margin-bottom: 1rem;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    position: relative;
+}
+
+.tweet-card:hover {
+    border-color: var(--color-accent-dim);
+}
+
+.tweet-card.speaking {
+    border-color: var(--color-accent);
+    box-shadow: 0 0 16px rgba(230, 57, 70, 0.25);
+}
+
+.tweet-header {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 0.75rem;
+}
+
+.tweet-avatar {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background: var(--color-accent-dim);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font-heading);
+    font-size: 1.25rem;
+    color: #fff;
+    flex-shrink: 0;
+}
+
+.tweet-author {
+    display: flex;
+    flex-direction: column;
+}
+
+.tweet-name {
+    font-weight: 600;
+    font-size: 0.95rem;
+}
+
+.tweet-handle {
+    color: var(--color-text-muted);
+    font-size: 0.85rem;
+}
+
+.tweet-text {
+    font-size: 1.05rem;
+    line-height: 1.6;
+    margin-bottom: 0.75rem;
+}
+
+.tweet-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.tweet-date {
+    color: var(--color-text-muted);
+    font-size: 0.8rem;
+}
+
+.tweet-speak-btn {
+    background: none;
+    border: 1px solid var(--color-border);
+    color: var(--color-text-muted);
+    border-radius: 50%;
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    font-size: 1rem;
+}
+
+.tweet-speak-btn:hover {
+    border-color: var(--color-accent);
+    color: var(--color-accent);
+}
+
+.tweet-speak-btn.active {
+    background: var(--color-accent);
+    border-color: var(--color-accent);
+    color: #fff;
+}
+
+/* Footer */
+footer {
+    text-align: center;
+    padding: 1.5rem 1rem;
+    color: var(--color-text-muted);
+    font-size: 0.8rem;
+    border-top: 1px solid var(--color-border);
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+    .header-content h1 {
+        font-size: 2rem;
+        letter-spacing: 2px;
+    }
+
+    .tagline {
+        font-size: 0.95rem;
+    }
+
+    main {
+        padding: 1.25rem 0.75rem;
+    }
+
+    .tweet-card {
+        padding: 1rem;
+    }
+
+    .controls {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .btn {
+        justify-content: center;
+    }
+}
