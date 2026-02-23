@@ -61,7 +61,7 @@ const TWEETS = [
 // ---------------------------------------------------------------------------
 // "Adam" – deep, authoritative male voice (available on ElevenLabs free tier)
 const ELEVENLABS_VOICE_ID = "pNInz6obpgDQGcFmaJgB";
-const ELEVENLABS_MODEL = "eleven_monolingual_v1";
+const ELEVENLABS_MODEL = "eleven_multilingual_v2";
 
 function getApiKey() {
   return localStorage.getItem("elevenlabs_api_key") || "";
@@ -273,6 +273,8 @@ async function speakTweet(text) {
       return;
     } catch (e) {
       console.warn("ElevenLabs failed, falling back to browser TTS:", e);
+      voiceStatus.textContent = "ElevenLabs error – using browser voice. Check API key.";
+      voiceStatus.className = "voice-status";
     }
   }
   await speakWithBrowser(text);
