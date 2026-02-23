@@ -14,6 +14,7 @@
         <div class="header-content">
             <h1>Arnold's Tweets</h1>
             <p class="tagline">I'll be back... on your timeline.</p>
+            <button id="settings-btn" class="settings-btn" title="Voice Settings">&#9881;</button>
         </div>
     </header>
 
@@ -27,8 +28,32 @@
             </button>
         </div>
 
+        <div id="voice-status" class="voice-status"></div>
+
         <div id="tweets-container"></div>
     </main>
+
+    <!-- Settings Modal -->
+    <div id="settings-modal" class="modal-backdrop">
+        <div class="modal">
+            <h2>Voice Settings</h2>
+            <p class="modal-description">
+                To get a realistic deep male voice (close to Arnold), you need a free
+                <strong>ElevenLabs</strong> API key.
+            </p>
+            <ol class="setup-steps">
+                <li>Go to <a href="https://elevenlabs.io" target="_blank" rel="noopener">elevenlabs.io</a> and sign up (free)</li>
+                <li>Click your profile icon &rarr; <strong>Profile + API key</strong></li>
+                <li>Copy your API key and paste it below</li>
+            </ol>
+            <label for="api-key-input" class="input-label">API Key</label>
+            <input type="password" id="api-key-input" class="api-key-input" placeholder="Paste your ElevenLabs API key here">
+            <div class="modal-actions">
+                <button id="settings-close" class="btn btn-secondary">Cancel</button>
+                <button id="settings-save" class="btn btn-primary">Save</button>
+            </div>
+        </div>
+    </div>
 
     <footer>
         <p>ArnoldsTweets.com &mdash; Not affiliated with Arnold Schwarzenegger.</p>

@@ -215,6 +215,135 @@ main {
     color: #fff;
 }
 
+/* Settings button */
+.header-content {
+    position: relative;
+}
+
+.settings-btn {
+    position: absolute;
+    top: 0;
+    right: 0;
+    background: none;
+    border: 1px solid var(--color-border);
+    color: var(--color-text-muted);
+    font-size: 1.4rem;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.settings-btn:hover {
+    border-color: var(--color-accent);
+    color: var(--color-accent);
+}
+
+/* Voice status indicator */
+.voice-status {
+    text-align: center;
+    font-size: 0.8rem;
+    color: var(--color-text-muted);
+    margin-bottom: 1.5rem;
+}
+
+.voice-status.active {
+    color: #4caf50;
+}
+
+/* Settings Modal */
+.modal-backdrop {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.7);
+    z-index: 1000;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+}
+
+.modal-backdrop.open {
+    display: flex;
+}
+
+.modal {
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: 12px;
+    padding: 2rem;
+    max-width: 480px;
+    width: 100%;
+}
+
+.modal h2 {
+    font-family: var(--font-heading);
+    font-size: 1.5rem;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin-bottom: 1rem;
+}
+
+.modal-description {
+    color: var(--color-text-muted);
+    font-size: 0.9rem;
+    line-height: 1.5;
+    margin-bottom: 1rem;
+}
+
+.setup-steps {
+    color: var(--color-text);
+    font-size: 0.9rem;
+    line-height: 1.8;
+    margin-bottom: 1.25rem;
+    padding-left: 1.25rem;
+}
+
+.setup-steps a {
+    color: var(--color-accent);
+    text-decoration: none;
+}
+
+.setup-steps a:hover {
+    text-decoration: underline;
+}
+
+.input-label {
+    display: block;
+    font-size: 0.8rem;
+    color: var(--color-text-muted);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 0.5rem;
+}
+
+.api-key-input {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    background: var(--color-bg);
+    border: 1px solid var(--color-border);
+    border-radius: 6px;
+    color: var(--color-text);
+    font-family: var(--font-body);
+    font-size: 0.95rem;
+    margin-bottom: 1.5rem;
+}
+
+.api-key-input:focus {
+    outline: none;
+    border-color: var(--color-accent);
+}
+
+.modal-actions {
+    display: flex;
+    gap: 0.75rem;
+    justify-content: flex-end;
+}
+
 /* Footer */
 footer {
     text-align: center;

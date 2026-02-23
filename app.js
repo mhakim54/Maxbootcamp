@@ -1,7 +1,8 @@
 // ---------------------------------------------------------------------------
 // Arnold's Tweets – app.js
-// Displays Arnold Schwarzenegger tweets and reads them aloud using the
-// Web Speech API with settings tuned to approximate his deep voice.
+// Displays Arnold Schwarzenegger tweets and reads them aloud.
+// Uses ElevenLabs AI voice for realistic deep male voice, with browser
+// Web Speech API as a fallback.
 // ---------------------------------------------------------------------------
 
 const TWEETS = [
@@ -56,18 +57,75 @@ const TWEETS = [
 ];
 
 // ---------------------------------------------------------------------------
+// ElevenLabs config
+// ---------------------------------------------------------------------------
+// "Adam" – deep, authoritative male voice (available on ElevenLabs free tier)
+const ELEVENLABS_VOICE_ID = "pNInz6obpgDQGcFmaJgB";
+const ELEVENLABS_MODEL = "eleven_monolingual_v1";
+
+function getApiKey() {
+  return localStorage.getItem("elevenlabs_api_key") || "";
+}
+
+function setApiKey(key) {
+  localStorage.setItem("elevenlabs_api_key", key.trim());
+}
+
+// ---------------------------------------------------------------------------
 // DOM references
 // ---------------------------------------------------------------------------
 const tweetsContainer = document.getElementById("tweets-container");
 const readAllBtn = document.getElementById("read-all-btn");
 const stopBtn = document.getElementById("stop-btn");
+const settingsBtn = document.getElementById("settings-btn");
+const settingsModal = document.getElementById("settings-modal");
+const settingsClose = document.getElementById("settings-close");
+const settingsSave = document.getElementById("settings-save");
+const apiKeyInput = document.getElementById("api-key-input");
+const voiceStatus = document.getElementById("voice-status");
 
 // ---------------------------------------------------------------------------
 // State
 // ---------------------------------------------------------------------------
 let isSpeaking = false;
-let currentUtterance = null;
-let readAllIndex = -1; // -1 means not in "read all" mode
+let currentAudio = null;       // for ElevenLabs (Audio element)
+let currentUtterance = null;   // for browser fallback
+let readAllIndex = -1;
+
+// ---------------------------------------------------------------------------
+// Settings modal
+// ---------------------------------------------------------------------------
+settingsBtn.addEventListener("click", () => {
+  apiKeyInput.value = getApiKey();
+  settingsModal.classList.add("open");
+});
+
+settingsClose.addEventListener("click", () => {
+  settingsModal.classList.remove("open");
+});
+
+settingsSave.addEventListener("click", () => {
+  setApiKey(apiKeyInput.value);
+  updateVoiceStatus();
+  settingsModal.classList.remove("open");
+});
+
+// Close modal on backdrop click
+settingsModal.addEventListener("click", (e) => {
+  if (e.target === settingsModal) {
+    settingsModal.classList.remove("open");
+  }
+});
+
+function updateVoiceStatus() {
+  if (getApiKey()) {
+    voiceStatus.textContent = "ElevenLabs AI Voice";
+    voiceStatus.className = "voice-status active";
+  } else {
+    voiceStatus.textContent = "Browser Voice (set up ElevenLabs for Arnold voice)";
+    voiceStatus.className = "voice-status";
+  }
+}
 
 // ---------------------------------------------------------------------------
 // Render tweets
@@ -105,100 +163,119 @@ function escapeHtml(text) {
 }
 
 // ---------------------------------------------------------------------------
-// Speech synthesis helpers
+// ElevenLabs TTS
 // ---------------------------------------------------------------------------
+function speakWithElevenLabs(text) {
+  return new Promise(async (resolve, reject) => {
+    try {
+      const response = await fetch(
+        `https://api.elevenlabs.io/v1/text-to-speech/${ELEVENLABS_VOICE_ID}`,
+        {
+          method: "POST",
+          headers: {
+            "xi-api-key": getApiKey(),
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            text: text,
+            model_id: ELEVENLABS_MODEL,
+            voice_settings: {
+              stability: 0.6,
+              similarity_boost: 0.85,
+              style: 0.4,
+              use_speaker_boost: true,
+            },
+          }),
+        }
+      );
 
-/**
- * Pick the best available voice.  Prefer a deep-sounding English male voice.
- * This list is ordered by preference — the first match wins.
- * Prioritizes voices known to sound deeper/more masculine across platforms.
- */
+      if (!response.ok) {
+        const err = await response.text();
+        reject(new Error(`ElevenLabs API error: ${response.status} – ${err}`));
+        return;
+      }
+
+      const blob = await response.blob();
+      const url = URL.createObjectURL(blob);
+      const audio = new Audio(url);
+      currentAudio = audio;
+
+      audio.onended = () => {
+        URL.revokeObjectURL(url);
+        currentAudio = null;
+        resolve();
+      };
+
+      audio.onerror = (e) => {
+        URL.revokeObjectURL(url);
+        currentAudio = null;
+        reject(new Error("Audio playback error"));
+      };
+
+      audio.play();
+    } catch (e) {
+      reject(e);
+    }
+  });
+}
+
+// ---------------------------------------------------------------------------
+// Browser fallback TTS
+// ---------------------------------------------------------------------------
 function pickVoice() {
   const voices = speechSynthesis.getVoices();
-  // Preferred voice names ordered by "deepness" (varies by OS/browser)
   const preferred = [
-    "Aaron",                    // macOS – deep American male
-    "Daniel",                   // macOS – British, deep tone
-    "Google UK English Male",   // Chrome – deep British male
-    "Microsoft David",          // Windows – deep male
-    "Microsoft Mark",           // Windows – another male option
-    "Alex",                     // macOS – classic male voice
-    "Fred",                     // macOS – deep robotic male
-    "Google US English",        // Chrome – generic male
-    "English (America)",        // Firefox
-    "en-US",                    // generic fallback
+    "Aaron", "Daniel", "Google UK English Male", "Microsoft David",
+    "Microsoft Mark", "Alex", "Fred", "Google US English",
+    "English (America)", "en-US",
   ];
-
   for (const name of preferred) {
     const v = voices.find(
-      (voice) =>
-        voice.name.includes(name) && voice.lang.startsWith("en")
+      (voice) => voice.name.includes(name) && voice.lang.startsWith("en")
     );
     if (v) return v;
   }
-
-  // Fallback: any English voice
   return voices.find((v) => v.lang.startsWith("en")) || voices[0] || null;
 }
 
-/**
- * Pre-process text to add dramatic pauses that mimic Arnold's deliberate,
- * punchy speaking style.  Inserts brief SSML-style pauses via punctuation
- * since most browsers don't support SSML but DO pause on periods/commas.
- */
-function arnoldify(text) {
-  let result = text;
-  // Add a slight pause after short punchy sentences (Arnold emphasis)
-  result = result.replace(/([.!?])\s+/g, "$1 ... ");
-  // Add pause before dramatic conjunctions
-  result = result.replace(/\b(but|and|so|because)\b/gi, "... $1");
-  // Add pause around dashes/em-dashes
-  result = result.replace(/\s*[—–-]\s*/g, " ... ");
-  return result;
-}
-
-/**
- * Speak a single tweet's text with Arnold-tuned parameters.
- * Returns a Promise that resolves when the utterance finishes.
- */
-function speakTweet(text) {
+function speakWithBrowser(text) {
   return new Promise((resolve, reject) => {
     if (!("speechSynthesis" in window)) {
       reject(new Error("Speech synthesis not supported"));
       return;
     }
-
-    // Cancel anything currently playing
     speechSynthesis.cancel();
-
-    const utterance = new SpeechSynthesisUtterance(arnoldify(text));
+    const utterance = new SpeechSynthesisUtterance(text);
     currentUtterance = utterance;
-
-    // Arnold-ish tuning: very deep pitch, slow & deliberate pace
-    utterance.pitch = 0.35;  // very low pitch – as deep as the API allows
-    utterance.rate = 0.72;   // slow, deliberate, like Terminator delivery
+    utterance.pitch = 0.35;
+    utterance.rate = 0.72;
     utterance.volume = 1;
-
     const voice = pickVoice();
     if (voice) utterance.voice = voice;
 
-    utterance.onend = () => {
-      currentUtterance = null;
-      resolve();
-    };
-
+    utterance.onend = () => { currentUtterance = null; resolve(); };
     utterance.onerror = (e) => {
       currentUtterance = null;
-      // "interrupted" is expected when user clicks Stop
-      if (e.error === "interrupted" || e.error === "canceled") {
-        resolve();
-      } else {
-        reject(e);
-      }
+      if (e.error === "interrupted" || e.error === "canceled") resolve();
+      else reject(e);
     };
-
     speechSynthesis.speak(utterance);
   });
+}
+
+// ---------------------------------------------------------------------------
+// Unified speak function – prefers ElevenLabs, falls back to browser
+// ---------------------------------------------------------------------------
+async function speakTweet(text) {
+  if (getApiKey()) {
+    try {
+      await speakWithElevenLabs(text);
+      return;
+    } catch (e) {
+      console.warn("ElevenLabs failed, falling back to browser TTS:", e);
+    }
+  }
+  await speakWithBrowser(text);
 }
 
 // ---------------------------------------------------------------------------
@@ -232,15 +309,11 @@ function setPlaying(playing) {
 // ---------------------------------------------------------------------------
 // Event handlers
 // ---------------------------------------------------------------------------
-
-// Individual tweet read-aloud buttons
 tweetsContainer.addEventListener("click", async (e) => {
   const btn = e.target.closest(".tweet-speak-btn");
   if (!btn) return;
-
   const index = Number(btn.dataset.index);
 
-  // If already speaking this tweet, stop
   if (isSpeaking) {
     stopSpeaking();
     return;
@@ -258,14 +331,13 @@ tweetsContainer.addEventListener("click", async (e) => {
   readAllIndex = -1;
 });
 
-// "Read All" button
 readAllBtn.addEventListener("click", async () => {
   if (isSpeaking) return;
   setPlaying(true);
 
   for (let i = 0; i < TWEETS.length; i++) {
     readAllIndex = i;
-    if (!isSpeaking) break; // user clicked stop
+    if (!isSpeaking) break;
     setSpeakingState(i);
     try {
       await speakTweet(TWEETS[i].text);
@@ -279,10 +351,16 @@ readAllBtn.addEventListener("click", async () => {
   readAllIndex = -1;
 });
 
-// Stop button
 stopBtn.addEventListener("click", stopSpeaking);
 
 function stopSpeaking() {
+  // Stop ElevenLabs audio
+  if (currentAudio) {
+    currentAudio.pause();
+    currentAudio.currentTime = 0;
+    currentAudio = null;
+  }
+  // Stop browser TTS
   speechSynthesis.cancel();
   clearSpeakingState();
   setPlaying(false);
@@ -292,10 +370,9 @@ function stopSpeaking() {
 // ---------------------------------------------------------------------------
 // Init
 // ---------------------------------------------------------------------------
-
-// Voices may load async — re-pick when ready
 if (speechSynthesis.onvoiceschanged !== undefined) {
-  speechSynthesis.onvoiceschanged = () => {}; // just trigger load
+  speechSynthesis.onvoiceschanged = () => {};
 }
 
+updateVoiceStatus();
 renderTweets();
