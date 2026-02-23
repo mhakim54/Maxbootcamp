@@ -59,8 +59,8 @@ const TWEETS = [
 // ---------------------------------------------------------------------------
 // ElevenLabs config
 // ---------------------------------------------------------------------------
-// "Adam" – deep, authoritative male voice (available on ElevenLabs free tier)
-const ELEVENLABS_VOICE_ID = "pNInz6obpgDQGcFmaJgB";
+// "Arnold" – crisp, deep male voice (ElevenLabs premade voice)
+const ELEVENLABS_VOICE_ID = "VR6AewLTigWG4xSOukaG";
 const ELEVENLABS_MODEL = "eleven_multilingual_v2";
 
 function getApiKey() {
@@ -180,9 +180,9 @@ function speakWithElevenLabs(text) {
             text: text,
             model_id: ELEVENLABS_MODEL,
             voice_settings: {
-              stability: 0.6,
-              similarity_boost: 0.85,
-              style: 0.4,
+              stability: 0.15,
+              similarity_boost: 0.75,
+              style: 0.5,
               use_speaker_boost: true,
             },
           }),
