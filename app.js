@@ -111,18 +111,22 @@ function escapeHtml(text) {
 /**
  * Pick the best available voice.  Prefer a deep-sounding English male voice.
  * This list is ordered by preference — the first match wins.
+ * Prioritizes voices known to sound deeper/more masculine across platforms.
  */
 function pickVoice() {
   const voices = speechSynthesis.getVoices();
-  // Preferred voice names (varies by OS/browser)
+  // Preferred voice names ordered by "deepness" (varies by OS/browser)
   const preferred = [
-    "Google UK English Male",
-    "Microsoft David",
-    "Daniel",
-    "Alex",
-    "Google US English",
-    "English (America)",
-    "en-US",
+    "Aaron",                    // macOS – deep American male
+    "Daniel",                   // macOS – British, deep tone
+    "Google UK English Male",   // Chrome – deep British male
+    "Microsoft David",          // Windows – deep male
+    "Microsoft Mark",           // Windows – another male option
+    "Alex",                     // macOS – classic male voice
+    "Fred",                     // macOS – deep robotic male
+    "Google US English",        // Chrome – generic male
+    "English (America)",        // Firefox
+    "en-US",                    // generic fallback
   ];
 
   for (const name of preferred) {
@@ -135,6 +139,22 @@ function pickVoice() {
 
   // Fallback: any English voice
   return voices.find((v) => v.lang.startsWith("en")) || voices[0] || null;
+}
+
+/**
+ * Pre-process text to add dramatic pauses that mimic Arnold's deliberate,
+ * punchy speaking style.  Inserts brief SSML-style pauses via punctuation
+ * since most browsers don't support SSML but DO pause on periods/commas.
+ */
+function arnoldify(text) {
+  let result = text;
+  // Add a slight pause after short punchy sentences (Arnold emphasis)
+  result = result.replace(/([.!?])\s+/g, "$1 ... ");
+  // Add pause before dramatic conjunctions
+  result = result.replace(/\b(but|and|so|because)\b/gi, "... $1");
+  // Add pause around dashes/em-dashes
+  result = result.replace(/\s*[—–-]\s*/g, " ... ");
+  return result;
 }
 
 /**
@@ -151,12 +171,12 @@ function speakTweet(text) {
     // Cancel anything currently playing
     speechSynthesis.cancel();
 
-    const utterance = new SpeechSynthesisUtterance(text);
+    const utterance = new SpeechSynthesisUtterance(arnoldify(text));
     currentUtterance = utterance;
 
-    // Arnold-ish tuning: deep pitch, deliberate pace
-    utterance.pitch = 0.55;  // low pitch
-    utterance.rate = 0.82;   // slightly slow, deliberate
+    // Arnold-ish tuning: very deep pitch, slow & deliberate pace
+    utterance.pitch = 0.35;  // very low pitch – as deep as the API allows
+    utterance.rate = 0.72;   // slow, deliberate, like Terminator delivery
     utterance.volume = 1;
 
     const voice = pickVoice();
