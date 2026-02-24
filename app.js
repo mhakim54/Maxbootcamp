@@ -7,52 +7,52 @@
 
 const TWEETS = [
   {
-    text: "Strength does not come from winning. Your struggles develop your strengths. When you go through hardships and decide not to surrender, that is strength.",
-    date: "Mar 14, 2020",
+    text: "Rain or shine, the pump is always out there. I rode my bike to Gold's this morning in the rain and had one of the best workouts of the year. Stop waiting for the perfect conditions. They don't exist. Just go.",
+    date: "Feb 11, 2026",
   },
   {
-    text: "I just used my tank to crush things for charity. Nothing gets the blood pumping like flattening a taxi cab to raise money for after-school programs.",
-    date: "Jun 2, 2019",
+    text: "For more than 60 years I've watched fitness change. Fads come and go. The machines change. The supplements change. But the fundamentals never do. Show up. Lift heavy. Eat real food. Sleep. Repeat. There are no shortcuts. Everything is reps, reps, reps.",
+    date: "Feb 4, 2026",
   },
   {
-    text: "The mind is the limit. As long as the mind can envision the fact that you can do something, you can do it, as long as you really believe 100 percent.",
-    date: "Jan 8, 2021",
+    text: "When life feels out of control, fitness is how you fight back. If you're unemployed, you can join the Pump Club and pay whatever you can, even if that's nothing at all. At the Pump Club, we put your progress over our profit. Together, we really can lift up the world.",
+    date: "Jan 1, 2026",
   },
   {
-    text: "Don't be afraid to fail. Anything I've ever attempted, I was always willing to fail. You can't always win, but don't be afraid of making decisions.",
-    date: "Sep 22, 2020",
+    text: "I'm not like those gyms that want to take your money on January 1 and then hope you stop showing up by February. I want you to use my app. Finish the Foundation program and I'll give you 50% of your annual membership back. Bet on yourself. Make 2026 your year.",
+    date: "Jan 1, 2026",
   },
   {
-    text: "I'm back from the gym. 45 minutes of cycling, 45 minutes of lifting. No excuses. If I can do it at my age, you can do it at yours. Let's go.",
-    date: "Nov 3, 2022",
+    text: "My best advice is to stop using motivation as your only fuel. I know it feels great when you're fired up, but it's a short-term fuel source. The only lasting fuel is routine. You don't need any more shortcuts or distractions. You need discipline. You need to show up every day.",
+    date: "Dec 15, 2025",
   },
   {
-    text: "I told my staff I will not be having a cheat meal this week. They laughed. I laughed. The donuts laughed. I ate the donuts.",
-    date: "Apr 17, 2021",
+    text: "When I had my hip replaced, I was back in the gym as soon as the doctor cleared me. That same winter, I was skiing again. The goal isn't to avoid aging, it's to stay in the game.",
+    date: "Nov 18, 2025",
   },
   {
-    text: "To all the students starting school today: work hard, stay curious, and remember — no one ever got strong by taking the easy way. Pump it up!",
-    date: "Aug 28, 2023",
+    text: "No, Jake. There has been gerrymandering going on for 200 years. There's no such thing as temporary, that's fantasy. Democrats and Republicans have to come together and solve this if they really want to be public servants. If they want to be party servants, it won't happen.",
+    date: "Oct 26, 2025",
   },
   {
-    text: "I walked into a restaurant in Austria and the waiter said 'I'll be right back.' I said 'No. That's my line.'",
-    date: "Jul 11, 2022",
+    text: "The mind always fails first, not the body. The secret is to make your mind work for you, not against you. What we face may look insurmountable. But I learned something from all those years of training and competing. We are always stronger than we know.",
+    date: "Sep 5, 2025",
   },
   {
-    text: "People always ask me what the best exercise is. The best exercise is the one you actually do. Stop overthinking, start moving.",
-    date: "Feb 5, 2023",
+    text: "I'm getting ready for the gerrymandering battle.",
+    date: "Aug 15, 2025",
   },
   {
-    text: "I came to America with nothing but a gym bag and a dream. This country gave me everything. Never take your opportunities for granted.",
-    date: "Jul 4, 2021",
+    text: "You're told supplements are the missing piece. As a result, you pour your hopes and hard-earned money into powders and pills, believing it will change everything. And too often, you end up disappointed.",
+    date: "Apr 10, 2025",
   },
   {
-    text: "My mini donkey Lulu just interrupted my Zoom meeting. She does not care about your quarterly projections. I respect that.",
-    date: "May 20, 2021",
+    text: "Today is Quitter's Day. But not for you. This is the weekend gym attendance drops because motivation falls off. I'm fighting back and not letting you quit. I know the power of training partners. I wouldn't be the Arnold you know without Franco.",
+    date: "Jan 10, 2025",
   },
   {
-    text: "Environmental protection isn't a partisan issue. It's a people issue. Clean air and clean water shouldn't be controversial. Let's terminate pollution.",
-    date: "Apr 22, 2022",
+    text: "I don't really do endorsements. I'm not shy about sharing my views, but I hate politics and don't trust most politicians. I will always be an American before I am a Republican. This week, I am voting for Kamala Harris and Tim Walz. Let's turn the page.",
+    date: "Oct 30, 2024",
   },
 ];
 
