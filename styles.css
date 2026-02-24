@@ -40,6 +40,16 @@ header {
     text-align: center;
 }
 
+.header-arnold-img {
+    width: 180px;
+    height: 180px;
+    object-fit: cover;
+    border-radius: 50%;
+    border: 3px solid var(--color-accent);
+    margin-bottom: 1rem;
+    box-shadow: 0 0 20px rgba(230, 57, 70, 0.3);
+}
+
 .header-content h1 {
     font-family: var(--font-heading);
     font-size: 3rem;
@@ -344,6 +354,51 @@ main {
     justify-content: flex-end;
 }
 
+/* Floating stop button */
+.floating-stop-btn {
+    position: fixed;
+    bottom: 2rem;
+    right: 2rem;
+    z-index: 900;
+    font-family: var(--font-heading);
+    font-size: 1rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    padding: 0.75rem 1.25rem;
+    background: var(--color-accent);
+    color: #fff;
+    border: 2px solid var(--color-accent);
+    border-radius: 50px;
+    cursor: pointer;
+    box-shadow: 0 4px 16px rgba(230, 57, 70, 0.4);
+    transition: all 0.2s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+}
+
+.floating-stop-btn:disabled {
+    opacity: 0;
+    pointer-events: none;
+    transform: scale(0.8);
+}
+
+.floating-stop-btn:not(:disabled) {
+    opacity: 1;
+    transform: scale(1);
+    animation: pulse-glow 2s ease-in-out infinite;
+}
+
+.floating-stop-btn:hover:not(:disabled) {
+    background: var(--color-accent-dim);
+    transform: scale(1.05);
+}
+
+@keyframes pulse-glow {
+    0%, 100% { box-shadow: 0 4px 16px rgba(230, 57, 70, 0.4); }
+    50% { box-shadow: 0 4px 24px rgba(230, 57, 70, 0.7); }
+}
+
 /* Footer */
 footer {
     text-align: center;
@@ -355,6 +410,11 @@ footer {
 
 /* Responsive */
 @media (max-width: 600px) {
+    .header-arnold-img {
+        width: 120px;
+        height: 120px;
+    }
+
     .header-content h1 {
         font-size: 2rem;
         letter-spacing: 2px;
@@ -379,5 +439,10 @@ footer {
 
     .btn {
         justify-content: center;
+    }
+
+    .floating-stop-btn {
+        bottom: 1rem;
+        right: 1rem;
     }
 }

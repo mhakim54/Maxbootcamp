@@ -83,6 +83,7 @@ const settingsClose = document.getElementById("settings-close");
 const settingsSave = document.getElementById("settings-save");
 const apiKeyInput = document.getElementById("api-key-input");
 const voiceStatus = document.getElementById("voice-status");
+const floatingStopBtn = document.getElementById("floating-stop-btn");
 
 // ---------------------------------------------------------------------------
 // State
@@ -306,6 +307,7 @@ function setPlaying(playing) {
   isSpeaking = playing;
   readAllBtn.disabled = playing;
   stopBtn.disabled = !playing;
+  floatingStopBtn.disabled = !playing;
 }
 
 // ---------------------------------------------------------------------------
@@ -354,6 +356,7 @@ readAllBtn.addEventListener("click", async () => {
 });
 
 stopBtn.addEventListener("click", stopSpeaking);
+floatingStopBtn.addEventListener("click", stopSpeaking);
 
 function stopSpeaking() {
   // Stop ElevenLabs audio
