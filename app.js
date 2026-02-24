@@ -59,8 +59,8 @@ const TWEETS = [
 // ---------------------------------------------------------------------------
 // ElevenLabs config
 // ---------------------------------------------------------------------------
-// "Arnold" – crisp, deep male voice (ElevenLabs premade voice)
-const ELEVENLABS_VOICE_ID = "VR6AewLTigWG4xSOukaG";
+// Arnold Schwarzenegger – custom voice clone
+const ELEVENLABS_VOICE_ID = "w0ky0iTUHLg2Zu1MPfpZ";
 const ELEVENLABS_MODEL = "eleven_multilingual_v2";
 
 function getApiKey() {
