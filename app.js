@@ -60,7 +60,7 @@ const TWEETS = [
 // ElevenLabs config
 // ---------------------------------------------------------------------------
 // Arnold Schwarzenegger – custom voice clone
-const ELEVENLABS_VOICE_ID = "MpKy08YX6pkK3dWpWUXi";
+const ELEVENLABS_VOICE_ID = "w0ky0iTUHLg2Zu1MPfpZ";
 const ELEVENLABS_MODEL = "eleven_multilingual_v2";
 
 function getApiKey() {
