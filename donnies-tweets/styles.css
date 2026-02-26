@@ -1,0 +1,479 @@
+*,
+*::before,
+*::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --color-bg: #0a0e1a;
+    --color-surface: #121829;
+    --color-surface-hover: #1a2240;
+    --color-accent: #c41230;
+    --color-accent-dim: #8c0d22;
+    --color-blue: #002868;
+    --color-gold: #d4af37;
+    --color-text: #f1f1f1;
+    --color-text-muted: #8899aa;
+    --color-border: #2a3550;
+    --font-heading: 'Oswald', sans-serif;
+    --font-body: 'Open Sans', sans-serif;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: var(--font-body);
+    background-color: var(--color-bg);
+    color: var(--color-text);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Header */
+header {
+    background: linear-gradient(135deg, #002868 0%, #0a0e1a 50%, #c41230 100%);
+    border-bottom: 3px solid var(--color-gold);
+    padding: 2.5rem 1rem;
+    text-align: center;
+}
+
+.header-avatar {
+    width: 140px;
+    height: 140px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--color-accent) 0%, var(--color-blue) 100%);
+    border: 3px solid var(--color-gold);
+    margin: 0 auto 1rem;
+    box-shadow: 0 0 20px rgba(212, 175, 55, 0.3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font-heading);
+    font-size: 3rem;
+    color: #fff;
+    letter-spacing: 2px;
+}
+
+.header-content h1 {
+    font-family: var(--font-heading);
+    font-size: 3rem;
+    text-transform: uppercase;
+    letter-spacing: 4px;
+    color: var(--color-text);
+    text-shadow: 0 0 10px rgba(212, 175, 55, 0.3);
+}
+
+.tagline {
+    font-size: 1.1rem;
+    color: var(--color-gold);
+    margin-top: 0.5rem;
+    font-style: italic;
+}
+
+/* Main content */
+main {
+    flex: 1;
+    max-width: 720px;
+    width: 100%;
+    margin: 0 auto;
+    padding: 2rem 1rem;
+}
+
+/* Controls */
+.controls {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    margin-bottom: 2rem;
+}
+
+.btn {
+    font-family: var(--font-heading);
+    font-size: 1rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    padding: 0.75rem 1.5rem;
+    border: 2px solid transparent;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.btn:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+}
+
+.btn-primary {
+    background: var(--color-accent);
+    color: #fff;
+    border-color: var(--color-accent);
+}
+
+.btn-primary:hover:not(:disabled) {
+    background: var(--color-accent-dim);
+}
+
+.btn-secondary {
+    background: transparent;
+    color: var(--color-text);
+    border-color: var(--color-border);
+}
+
+.btn-secondary:hover:not(:disabled) {
+    border-color: var(--color-text-muted);
+}
+
+.btn-icon {
+    font-size: 0.85rem;
+}
+
+/* Tweet cards */
+.tweet-card {
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: 8px;
+    padding: 1.25rem 1.5rem;
+    margin-bottom: 1rem;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    position: relative;
+}
+
+.tweet-card:hover {
+    border-color: var(--color-gold);
+}
+
+.tweet-card.speaking {
+    border-color: var(--color-accent);
+    box-shadow: 0 0 16px rgba(196, 18, 48, 0.25);
+}
+
+.tweet-header {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 0.75rem;
+}
+
+.tweet-avatar {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--color-accent) 0%, var(--color-blue) 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font-heading);
+    font-size: 1.25rem;
+    color: #fff;
+    flex-shrink: 0;
+}
+
+.tweet-author {
+    display: flex;
+    flex-direction: column;
+}
+
+.tweet-name {
+    font-weight: 600;
+    font-size: 0.95rem;
+}
+
+.tweet-handle {
+    color: var(--color-text-muted);
+    font-size: 0.85rem;
+}
+
+.tweet-platform {
+    font-size: 0.7rem;
+    padding: 0.15rem 0.4rem;
+    border-radius: 3px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-left: 0.5rem;
+}
+
+.tweet-platform.twitter {
+    background: #1d9bf0;
+    color: #fff;
+}
+
+.tweet-platform.truth {
+    background: #5448ee;
+    color: #fff;
+}
+
+.tweet-text {
+    font-size: 1.05rem;
+    line-height: 1.6;
+    margin-bottom: 0.75rem;
+}
+
+.tweet-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.tweet-date {
+    color: var(--color-text-muted);
+    font-size: 0.8rem;
+}
+
+.tweet-speak-btn {
+    background: none;
+    border: 1px solid var(--color-border);
+    color: var(--color-text-muted);
+    border-radius: 50%;
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    font-size: 1rem;
+}
+
+.tweet-speak-btn:hover {
+    border-color: var(--color-accent);
+    color: var(--color-accent);
+}
+
+.tweet-speak-btn.active {
+    background: var(--color-accent);
+    border-color: var(--color-accent);
+    color: #fff;
+}
+
+/* Settings button */
+.header-content {
+    position: relative;
+}
+
+.settings-btn {
+    position: absolute;
+    top: 0;
+    right: 0;
+    background: none;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: var(--color-text-muted);
+    font-size: 1.4rem;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.settings-btn:hover {
+    border-color: var(--color-gold);
+    color: var(--color-gold);
+}
+
+/* Voice status indicator */
+.voice-status {
+    text-align: center;
+    font-size: 0.8rem;
+    color: var(--color-text-muted);
+    margin-bottom: 1.5rem;
+}
+
+.voice-status.active {
+    color: #4caf50;
+}
+
+/* Settings Modal */
+.modal-backdrop {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.7);
+    z-index: 1000;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+}
+
+.modal-backdrop.open {
+    display: flex;
+}
+
+.modal {
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: 12px;
+    padding: 2rem;
+    max-width: 480px;
+    width: 100%;
+}
+
+.modal h2 {
+    font-family: var(--font-heading);
+    font-size: 1.5rem;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin-bottom: 1rem;
+}
+
+.modal-description {
+    color: var(--color-text-muted);
+    font-size: 0.9rem;
+    line-height: 1.5;
+    margin-bottom: 1rem;
+}
+
+.setup-steps {
+    color: var(--color-text);
+    font-size: 0.9rem;
+    line-height: 1.8;
+    margin-bottom: 1.25rem;
+    padding-left: 1.25rem;
+}
+
+.setup-steps a {
+    color: var(--color-gold);
+    text-decoration: none;
+}
+
+.setup-steps a:hover {
+    text-decoration: underline;
+}
+
+.input-label {
+    display: block;
+    font-size: 0.8rem;
+    color: var(--color-text-muted);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 0.5rem;
+}
+
+.api-key-input {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    background: var(--color-bg);
+    border: 1px solid var(--color-border);
+    border-radius: 6px;
+    color: var(--color-text);
+    font-family: var(--font-body);
+    font-size: 0.95rem;
+    margin-bottom: 1.5rem;
+}
+
+.api-key-input:focus {
+    outline: none;
+    border-color: var(--color-gold);
+}
+
+.modal-actions {
+    display: flex;
+    gap: 0.75rem;
+    justify-content: flex-end;
+}
+
+/* Floating stop button */
+.floating-stop-btn {
+    position: fixed;
+    bottom: 2rem;
+    right: 2rem;
+    z-index: 900;
+    font-family: var(--font-heading);
+    font-size: 1rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    padding: 0.75rem 1.25rem;
+    background: var(--color-accent);
+    color: #fff;
+    border: 2px solid var(--color-accent);
+    border-radius: 50px;
+    cursor: pointer;
+    box-shadow: 0 4px 16px rgba(196, 18, 48, 0.4);
+    transition: all 0.2s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+}
+
+.floating-stop-btn:disabled {
+    opacity: 0;
+    pointer-events: none;
+    transform: scale(0.8);
+}
+
+.floating-stop-btn:not(:disabled) {
+    opacity: 1;
+    transform: scale(1);
+    animation: pulse-glow 2s ease-in-out infinite;
+}
+
+.floating-stop-btn:hover:not(:disabled) {
+    background: var(--color-accent-dim);
+    transform: scale(1.05);
+}
+
+@keyframes pulse-glow {
+    0%, 100% { box-shadow: 0 4px 16px rgba(196, 18, 48, 0.4); }
+    50% { box-shadow: 0 4px 24px rgba(196, 18, 48, 0.7); }
+}
+
+/* Footer */
+footer {
+    text-align: center;
+    padding: 1.5rem 1rem;
+    color: var(--color-text-muted);
+    font-size: 0.8rem;
+    border-top: 1px solid var(--color-border);
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+    .header-avatar {
+        width: 100px;
+        height: 100px;
+        font-size: 2rem;
+    }
+
+    .header-content h1 {
+        font-size: 2rem;
+        letter-spacing: 2px;
+    }
+
+    .tagline {
+        font-size: 0.95rem;
+    }
+
+    main {
+        padding: 1.25rem 0.75rem;
+    }
+
+    .tweet-card {
+        padding: 1rem;
+    }
+
+    .controls {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .btn {
+        justify-content: center;
+    }
+
+    .floating-stop-btn {
+        bottom: 1rem;
+        right: 1rem;
+    }
+}
