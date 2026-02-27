@@ -277,7 +277,8 @@ async function speakTweet(text) {
       return;
     } catch (e) {
       console.warn("Fish Audio failed, falling back to browser TTS:", e);
-      voiceStatus.textContent = "Fish Audio error – using browser voice. Check API key.";
+      const errMsg = e.message || String(e);
+      voiceStatus.textContent = "Fish Audio error: " + errMsg.substring(0, 120);
       voiceStatus.className = "voice-status";
     }
   }
