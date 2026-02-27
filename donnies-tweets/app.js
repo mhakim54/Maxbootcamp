@@ -178,7 +178,7 @@ function speakWithFishAudio(text) {
   return new Promise(async (resolve, reject) => {
     try {
       const apiUrl = "https://api.fish.audio/v1/tts";
-      const proxyUrl = "https://corsproxy.io/?" + encodeURIComponent(apiUrl);
+      const proxyUrl = "https://api.allorigins.win/raw?url=" + encodeURIComponent(apiUrl);
       const response = await fetch(
         proxyUrl,
         {
