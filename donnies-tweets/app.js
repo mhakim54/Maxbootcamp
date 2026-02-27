@@ -177,10 +177,8 @@ function escapeHtml(text) {
 function speakWithFishAudio(text) {
   return new Promise(async (resolve, reject) => {
     try {
-      const apiUrl = "https://api.fish.audio/v1/tts";
-      const proxyUrl = "https://api.allorigins.win/raw?url=" + encodeURIComponent(apiUrl);
       const response = await fetch(
-        proxyUrl,
+        "https://api.fish.audio/v1/tts",
         {
           method: "POST",
           headers: {
