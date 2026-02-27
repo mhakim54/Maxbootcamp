@@ -42,21 +42,14 @@ header {
     text-align: center;
 }
 
-.header-avatar {
-    width: 140px;
-    height: 140px;
+.header-trump-img {
+    width: 180px;
+    height: 180px;
+    object-fit: cover;
     border-radius: 50%;
-    background: linear-gradient(135deg, var(--color-accent) 0%, var(--color-blue) 100%);
     border: 3px solid var(--color-gold);
-    margin: 0 auto 1rem;
+    margin-bottom: 1rem;
     box-shadow: 0 0 20px rgba(212, 175, 55, 0.3);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-family: var(--font-heading);
-    font-size: 3rem;
-    color: #fff;
-    letter-spacing: 2px;
 }
 
 .header-content h1 {
@@ -440,10 +433,9 @@ footer {
 
 /* Responsive */
 @media (max-width: 600px) {
-    .header-avatar {
-        width: 100px;
-        height: 100px;
-        font-size: 2rem;
+    .header-trump-img {
+        width: 120px;
+        height: 120px;
     }
 
     .header-content h1 {

@@ -66,8 +66,8 @@ const TWEETS = [
 // ---------------------------------------------------------------------------
 // ElevenLabs config
 // ---------------------------------------------------------------------------
-// Default voice – "Adam" (a deep male voice available on free tier)
-const ELEVENLABS_VOICE_ID = "pNInz6obpgDQGcFmaJgB";
+// Trump voice clone (may require ElevenLabs verification)
+const ELEVENLABS_VOICE_ID = "nIBke5XE9E1mr9eWkwkG";
 const ELEVENLABS_MODEL = "eleven_multilingual_v2";
 
 function getApiKey() {
