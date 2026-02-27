@@ -1,7 +1,7 @@
 // ---------------------------------------------------------------------------
 // Donnie's Tweets – app.js
 // Displays Donald Trump tweets & Truth Social posts and reads them aloud.
-// Uses ElevenLabs AI voice for realistic voice, with browser
+// Uses Fish Audio AI voice for realistic Trump voice, with browser
 // Web Speech API as a fallback.
 // ---------------------------------------------------------------------------
 
@@ -64,18 +64,17 @@ const TWEETS = [
 ];
 
 // ---------------------------------------------------------------------------
-// ElevenLabs config
+// Fish Audio config
 // ---------------------------------------------------------------------------
-// Trump voice clone (may require ElevenLabs verification)
-const ELEVENLABS_VOICE_ID = "nIBke5XE9E1mr9eWkwkG";
-const ELEVENLABS_MODEL = "eleven_multilingual_v2";
+// "POTUS 47 - Trump" voice model on Fish Audio
+const FISH_AUDIO_VOICE_ID = "e58b0d7efca34eb38d5c4985e378abcb";
 
 function getApiKey() {
-  return localStorage.getItem("elevenlabs_api_key_donnie") || "";
+  return localStorage.getItem("fish_audio_api_key_donnie") || "";
 }
 
 function setApiKey(key) {
-  localStorage.setItem("elevenlabs_api_key_donnie", key.trim());
+  localStorage.setItem("fish_audio_api_key_donnie", key.trim());
 }
 
 // ---------------------------------------------------------------------------
@@ -96,7 +95,7 @@ const floatingStopBtn = document.getElementById("floating-stop-btn");
 // State
 // ---------------------------------------------------------------------------
 let isSpeaking = false;
-let currentAudio = null;       // for ElevenLabs (Audio element)
+let currentAudio = null;       // for Fish Audio (Audio element)
 let currentUtterance = null;   // for browser fallback
 let readAllIndex = -1;
 
@@ -127,10 +126,10 @@ settingsModal.addEventListener("click", (e) => {
 
 function updateVoiceStatus() {
   if (getApiKey()) {
-    voiceStatus.textContent = "ElevenLabs AI Voice";
+    voiceStatus.textContent = "Fish Audio – Trump AI Voice";
     voiceStatus.className = "voice-status active";
   } else {
-    voiceStatus.textContent = "Browser Voice (set up ElevenLabs for AI voice)";
+    voiceStatus.textContent = "Browser Voice (set up Fish Audio for Trump voice)";
     voiceStatus.className = "voice-status";
   }
 }
@@ -173,35 +172,30 @@ function escapeHtml(text) {
 }
 
 // ---------------------------------------------------------------------------
-// ElevenLabs TTS
+// Fish Audio TTS
 // ---------------------------------------------------------------------------
-function speakWithElevenLabs(text) {
+function speakWithFishAudio(text) {
   return new Promise(async (resolve, reject) => {
     try {
       const response = await fetch(
-        `https://api.elevenlabs.io/v1/text-to-speech/${ELEVENLABS_VOICE_ID}`,
+        "https://api.fish.audio/v1/tts",
         {
           method: "POST",
           headers: {
-            "xi-api-key": getApiKey(),
+            "Authorization": "Bearer " + getApiKey(),
             "Content-Type": "application/json",
           },
           body: JSON.stringify({
+            reference_id: FISH_AUDIO_VOICE_ID,
             text: text,
-            model_id: ELEVENLABS_MODEL,
-            voice_settings: {
-              stability: 0.3,
-              similarity_boost: 0.75,
-              style: 0.4,
-              use_speaker_boost: true,
-            },
+            format: "mp3",
           }),
         }
       );
 
       if (!response.ok) {
         const err = await response.text();
-        reject(new Error(`ElevenLabs API error: ${response.status} – ${err}`));
+        reject(new Error(`Fish Audio API error: ${response.status} – ${err}`));
         return;
       }
 
@@ -274,16 +268,16 @@ function speakWithBrowser(text) {
 }
 
 // ---------------------------------------------------------------------------
-// Unified speak function – prefers ElevenLabs, falls back to browser
+// Unified speak function – prefers Fish Audio, falls back to browser
 // ---------------------------------------------------------------------------
 async function speakTweet(text) {
   if (getApiKey()) {
     try {
-      await speakWithElevenLabs(text);
+      await speakWithFishAudio(text);
       return;
     } catch (e) {
-      console.warn("ElevenLabs failed, falling back to browser TTS:", e);
-      voiceStatus.textContent = "ElevenLabs error – using browser voice. Check API key.";
+      console.warn("Fish Audio failed, falling back to browser TTS:", e);
+      voiceStatus.textContent = "Fish Audio error – using browser voice. Check API key.";
       voiceStatus.className = "voice-status";
     }
   }
@@ -368,7 +362,7 @@ stopBtn.addEventListener("click", stopSpeaking);
 floatingStopBtn.addEventListener("click", stopSpeaking);
 
 function stopSpeaking() {
-  // Stop ElevenLabs audio
+  // Stop Fish Audio
   if (currentAudio) {
     currentAudio.pause();
     currentAudio.currentTime = 0;
