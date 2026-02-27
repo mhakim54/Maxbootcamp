@@ -178,7 +178,7 @@ function speakWithFishAudio(text) {
   return new Promise(async (resolve, reject) => {
     try {
       const response = await fetch(
-        "https://api.fish.audio/v1/tts",
+        "/api/tts",
         {
           method: "POST",
           headers: {
