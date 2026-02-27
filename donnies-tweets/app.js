@@ -67,7 +67,7 @@ const TWEETS = [
 // Fish Audio config
 // ---------------------------------------------------------------------------
 // "POTUS 47 - Trump" voice model on Fish Audio
-const FISH_AUDIO_VOICE_ID = "e58b0d7efca34eb38d5c4985e378abcb";
+const FISH_AUDIO_VOICE_ID = "5196af35f6ff4a0dbf541793fc9f2157";
 
 function getApiKey() {
   return localStorage.getItem("fish_audio_api_key_donnie") || "";
